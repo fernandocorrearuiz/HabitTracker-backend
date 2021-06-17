@@ -13,6 +13,14 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          title: "Superman",
+          objective: "Be Superman",
+          currentLevel: "Batman",
+          userId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
