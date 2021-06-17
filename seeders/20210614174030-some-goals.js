@@ -21,6 +21,14 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          title: "Hulk",
+          objective: "Be Hulk",
+          currentLevel: "AntMan",
+          userId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
