@@ -36,10 +36,11 @@ router.patch("/:id/consecutiveDays", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  const habit = await Habit.findByPk(id);
-  res.json({ message: "Habit to Delete", habit });
+  const toDelete = await Habit.findByPk(id);
+  const deleteHabit = await toDelete.destroy();
+  res.json({ message: "Habit Deleted", deleteHabit });
 });
 
 router.post("/habit", async (req, res) => {
