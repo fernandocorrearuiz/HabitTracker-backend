@@ -7,12 +7,12 @@ const Weight = require("../models/").weight;
 
 const router = new Router();
 
-router.get("/", async (req, res) => {
-  const weights = await Weight.findAll();
+router.get("/", authMiddleware, async (req, res) => {
+  const weights = await Weight.findAll({ where: { userId: req.user.id } });
   res.status(200).send({ message: "ok", weights });
 });
 
-router.post("/weight", async (req, res) => {
+router.post("/weight", authMiddleware, async (req, res) => {
   const { newKg } = req.body;
   console.log(newKg);
   if (!newKg) {
@@ -21,7 +21,7 @@ router.post("/weight", async (req, res) => {
 
   const newWeight = await Weight.create({
     Kg: newKg,
-    userId: 1,
+    userId: req.user.id,
   });
 
   return res.status(201).send({ message: "Weight created", newWeight });

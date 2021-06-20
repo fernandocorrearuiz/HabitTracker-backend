@@ -6,9 +6,8 @@ const Habit = require("../models/").habit;
 
 const router = new Router();
 
-router.get("/", async (req, res) => {
-  // const habits = await Habit.findAll({ include: [User] });
-  const habits = await Habit.findAll();
+router.get("/", authMiddleware, async (req, res) => {
+  const habits = await Habit.findAll({ where: { userId: req.user.id } });
   res.status(200).send({ message: "ok", habits });
 });
 
@@ -43,7 +42,7 @@ router.delete("/:id", async (req, res) => {
   res.json({ message: "Habit Deleted", deleteHabit });
 });
 
-router.post("/habit", async (req, res) => {
+router.post("/habit", authMiddleware, async (req, res) => {
   const { name } = req.body;
   if (!name) {
     return res.status(400).send("Please provide a name");
@@ -51,7 +50,7 @@ router.post("/habit", async (req, res) => {
 
   const newHabit = await Habit.create({
     name,
-    userId: 1,
+    userId: req.user.id,
   });
 
   return res.status(201).send({ message: "Habit created", newHabit });

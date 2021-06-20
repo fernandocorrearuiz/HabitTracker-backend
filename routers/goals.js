@@ -7,8 +7,8 @@ const Goal = require("../models/").goal;
 
 const router = new Router();
 
-router.get("/", async (req, res) => {
-  const goals = await Goal.findAll();
+router.get("/", authMiddleware, async (req, res) => {
+  const goals = await Goal.findAll({ where: { userId: req.user.id } });
   res.status(200).send({ message: "ok", goals });
 });
 
@@ -19,7 +19,7 @@ router.delete("/:id", async (req, res) => {
   res.json({ message: "Goal Deleted", deleteGoal });
 });
 
-router.post("/goal", async (req, res) => {
+router.post("/goal", authMiddleware, async (req, res) => {
   const { title, objective, currentLevel } = req.body;
   if (!title || !objective || !currentLevel) {
     return res
@@ -31,7 +31,7 @@ router.post("/goal", async (req, res) => {
     title,
     objective,
     currentLevel,
-    userId: 1,
+    userId: req.user.id,
   });
 
   return res.status(201).send({ message: "Goal created", newGoal });
