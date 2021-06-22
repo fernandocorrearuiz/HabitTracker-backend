@@ -8,7 +8,12 @@ const Weight = require("../models/").weight;
 const router = new Router();
 
 router.get("/", authMiddleware, async (req, res) => {
-  const weights = await Weight.findAll({ where: { userId: req.user.id } });
+  const weights = await Weight.findAll({
+    where: { userId: req.user.id },
+    limit: req.query.limit,
+    offset: req.query.offset,
+    order: [["createdAt", "DESC"]],
+  });
   res.status(200).send({ message: "ok", weights });
 });
 
