@@ -37,4 +37,20 @@ router.post("/goal", authMiddleware, async (req, res) => {
   return res.status(201).send({ message: "Goal created", newGoal });
 });
 
+router.patch("/:id", async (req, res, next) => {
+  try {
+    const { currentLevel, objective } = req.body;
+    const goal = await Goal.findByPk(req.params.id);
+
+    await goal.update({
+      currentLevel,
+      objective,
+    });
+
+    return res.status(200).send({ goal });
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
