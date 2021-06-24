@@ -17,6 +17,14 @@ router.get("/", authMiddleware, async (req, res) => {
   res.status(200).send({ message: "ok", weights });
 });
 
+router.get("/latestWeight", authMiddleware, async (req, res) => {
+  const latestWeight = await Weight.findOne({
+    where: { userId: req.user.id },
+    order: [["createdAt", "DESC"]],
+  });
+  res.status(200).send({ message: "ok", latestWeight });
+});
+
 router.post("/weight", authMiddleware, async (req, res) => {
   const { newKg } = req.body;
   console.log(newKg);
