@@ -77,7 +77,7 @@ router.get("/me", authMiddleware, async (req, res) => {
   const user = await User.findOne({
     where: { id: req.user.id },
     include: [Habit, Weight, Goal],
-    order: [["id", "DESC"]],
+    order: [["createdAt", "ASC"]],
   });
   // don't send back the password hash
   delete req.user.dataValues["password"];
