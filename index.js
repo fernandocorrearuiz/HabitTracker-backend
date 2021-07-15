@@ -1,6 +1,4 @@
 const cors = require("cors");
-app.use(cors());
-
 const express = require("express");
 const loggerMiddleWare = require("morgan");
 const corsMiddleWare = require("cors");
@@ -12,6 +10,8 @@ const goalRouter = require("./routers/goals");
 const authMiddleWare = require("./auth/middleware");
 
 const app = express();
+
+app.use(cors());
 
 /**
  * Middlewares
